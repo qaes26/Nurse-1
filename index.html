@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أساسيات التمريض - إعداد قيس الجازي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0077b6;
+            --secondary: #00b4d8;
+            --accent: #ff9f1c;
+            --correct: #2a9d8f;
+            --incorrect: #e76f51;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #2b2d42;
+            --text-muted: #6c757d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        .eng-term {
+            font-family: 'Nunito', sans-serif;
+            color: #023e8a;
+            background: #e0aaff20;
+            padding: 0 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .author-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: -1.5rem auto 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Containers */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Explanation Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border-right: 5px solid var(--secondary);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px dashed #eee;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul {
+            padding-right: 20px;
+        }
+        
+        .card li {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background: rgba(0, 180, 216, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-right: 4px solid var(--primary);
+        }
+
+        .warning {
+            background: rgba(231, 111, 81, 0.1);
+            border-right-color: var(--incorrect);
+        }
+
+        /* Quiz Styles */
+        .quiz-intro {
+            text-align: center;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .btn-start {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 159, 28, 0.4);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-start:hover {
+            background: #e08b16;
+            transform: translateY(-3px);
+        }
+
+        #quizArea {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option-btn {
+            background: var(--bg);
+            border: 2px solid #e9ecef;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: right;
+            transition: all 0.2s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #e2eafc;
+            border-color: var(--primary);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            background: var(--correct);
+            color: white;
+            border-color: var(--correct);
+        }
+
+        .option-btn.wrong {
+            background: var(--incorrect);
+            color: white;
+            border-color: var(--incorrect);
+        }
+
+        /* Feedback Section */
+        .feedback {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-weight: bold;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.success {
+            background: rgba(42, 157, 143, 0.1);
+            border-right: 5px solid var(--correct);
+            color: #21867a;
+        }
+
+        .feedback.error {
+            background: rgba(231, 111, 81, 0.1);
+            border-right: 5px solid var(--incorrect);
+            color: #c95c43;
+        }
+
+        .auto-next-loader {
+            height: 4px;
+            background: rgba(0,0,0,0.1);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .auto-next-bar {
+            height: 100%;
+            background: currentColor;
+            width: 100%;
+            transition: width linear;
+        }
+
+        /* Result Section */
+        #resultArea {
+            display: none;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 10px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 auto 2rem;
+            color: var(--primary);
+        }
+
+        .mistakes-list {
+            text-align: right;
+            margin-top: 2rem;
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .mistake-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .mistake-item:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>أساسيات التمريض - الجانب العملي <br><small style="font-size: 1.5rem;">Fundamentals of Nursing - Clinical</small></h1>
+        <p>شرح مبسط (عربي-إنجليزي) وامتحان تفاعلي للتدريب الاحترافي</p>
+        <div class="author-badge">إعداد: قيس الجازي</div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('study')">📖 قسم الشرح والمراجعة (Study Section)</button>
+        <button class="tab-btn" onclick="switchTab('quiz')">🎯 الامتحان التفاعلي (Interactive Quiz)</button>
+    </div>
+
+    <div class="container">
+        <!-- Section: Study -->
+        <div id="study" class="section active">
+            
+            <div class="card">
+                <h2>1. نظافة اليدين <span class="eng-term">Hand Hygiene</span></h2>
+                <p>تُعد نظافة اليدين الإجراء <strong>الأهم</strong> لمنع انتقال العدوى المكتسبة في المستشفيات <span class="eng-term">Health care-associated infection</span>.</p>
+                <ul>
+                    <li><strong>المعقم الكحولي <span class="eng-term">Alcohol-based hand rub</span>:</strong> هو المفضل والأسرع، يستغرق <strong>(20-30 ثانية)</strong>.</li>
+                    <li><strong>الماء والصابون <span class="eng-term">Soap and water</span>:</strong> يُستخدم حصراً إذا كانت اليدان متسختين بوضوح <span class="eng-term">Visibly soiled</span> (بالدم/السوائل) أو بعد العناية بمريض مصاب بإسهال مُعدٍ. يستغرق <strong>(40-60 ثانية)</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>2. التعقيم الجراحي ومعدات الحماية <span class="eng-term">Surgical Scrub & PPE</span></h2>
+                <div class="highlight">
+                    <strong>التعقيم الجراحي <span class="eng-term">Surgical Hand Scrub</span>:</strong> فرك اليدين والساعدين لمدة (15-20 ثانية). يجب إبقاء اليدين <em>أعلى من مستوى المرفقين <span class="eng-term">Above elbows</span></em> لكي يتدفق الماء من المنطقة النظيفة <span class="eng-term">Clean area</span> للأسفل إلى الأقل نظافة.
+                </div>
+                <p><strong>معدات الحماية الشخصية <span class="eng-term">Personal Protective Equipment - PPE</span>:</strong></p>
+                <ul>
+                    <li><strong>ترتيب الارتداء <span class="eng-term">Donning</span>:</strong> غطاء الرأس/الحذاء ➔ الكمامة <span class="eng-term">Mask</span> ➔ النظارات <span class="eng-term">Eyewear/Goggles</span> ➔ المريول المعقم <span class="eng-term">Gown</span> ➔ القفازات <span class="eng-term">Gloves</span>.</li>
+                    <li><strong>ترتيب النزع <span class="eng-term">Doffing</span>:</strong> المريول والقفازات معاً (الأكثر تلوثاً <span class="eng-term">Most contaminated</span>) ➔ النظارات ➔ الكمامة (من الأربطة الخلفية وليس من الأمام).</li>
+                </ul>
+                <div class="highlight warning">
+                    <strong>تنبيه <span class="eng-term">Warning</span>:</strong> تفقد معدات الحماية فعاليتها إذا أصبحت مبللة <span class="eng-term">Wet</span> وتسمح بمرور الكائنات الدقيقة.
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. العلامات الحيوية <span class="eng-term">Vital Signs</span></h2>
+                <ul>
+                    <li><strong>الحرارة <span class="eng-term">Temperature</span>:</strong> يُمنع قياسها فموياً <span class="eng-term">Oral route contraindicated</span> للأطفال الصغار أو فاقدي الوعي (لخطر عض الميزان). وفي قياس طبلة الأذن <span class="eng-term">Tympanic</span> للبالغين نسحب الصيوان (للأعلى والخلف <span class="eng-term">Up and back</span>)، وللأطفال تحت 3 سنوات (للأسفل والخلف <span class="eng-term">Down and back</span>).</li>
+                    <li><strong>النبض <span class="eng-term">Pulse Rate</span>:</strong> الطبيعي (60-100). تباطؤ <span class="eng-term">Bradycardia</span>، وتسارع <span class="eng-term">Tachycardia</span>. يُمنع استخدام <em>الإبهام <span class="eng-term">Thumb</span></em> للقياس لأن له نبضاً خاصاً. مواقع القياس تشمل الكعبري <span class="eng-term">Radial</span> والقمّي <span class="eng-term">Apical</span>.</li>
+                    <li><strong>التنفس <span class="eng-term">Respiration Rate</span>:</strong> الطبيعي (12-20). يجب قياسه دون إشعار المريض لتجنب تحكمه الإرادي بنفَسِه. (تسارع التنفس يسمى <span class="eng-term">Tachypnea</span>).</li>
+                    <li><strong>ضغط الدم <span class="eng-term">Blood Pressure</span>:</strong> يجب أن يرتاح المريض لـ 5 دقائق، وألا يكون قد شرب كافيين أو دخن، وألا تكون مثانته ممتلئة <span class="eng-term">Full bladder</span> (لأنها ترفع الضغط مؤقتاً).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>4. سكر الدم والأكسجين <span class="eng-term">Blood Glucose & Pulse Oximetry</span></h2>
+                <p><strong>قياس الأكسجين <span class="eng-term">Pulse Oximetry - SpO2</span>:</strong> للحصول على قراءة دقيقة يجب وضع يد المريض بمستوى القلب. طلاء الأظافر <span class="eng-term">Nail polish</span> وبرودة الأطراف (التي تسبب تضيق الأوعية <span class="eng-term">Vasoconstriction</span>) تؤثران سلباً على دقة القراءة.</p>
+                <p><strong>سكر الدم <span class="eng-term">Blood Glucose Monitoring</span>:</strong></p>
+                <ul>
+                    <li>ارتفاع السكر <span class="eng-term">Hyperglycemia</span>: >140 mg/dL للمرضى المنومين في المستشفى.</li>
+                    <li>انخفاض السكر <span class="eng-term">Hypoglycemia</span>: مستوى الخطر 2 (Level 2) يكون أقل من 54 mg/dL.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>5. إعطاء الأدوية <span class="eng-term">Medication Administration</span></h2>
+                <p>تذكر دائماً "الحقوق الخمسة <span class="eng-term">Five Rights</span>": (المريض الصحيح <span class="eng-term">Right patient</span>، الدواء الصحيح <span class="eng-term">Right medication</span>، الجرعة الصحيحة <span class="eng-term">Right dose</span>، الوقت الصحيح <span class="eng-term">Right time</span>، والطريقة الصحيحة <span class="eng-term">Right route</span>).</p>
+                <ul>
+                    <li><strong>تحت اللسان <span class="eng-term">Sublingual</span>:</strong> يجب أن تذوب تماماً ويُمنع مضغها أو بلعها (لتجنب عصارة المعدة).</li>
+                    <li><strong>العين <span class="eng-term">Ophthalmic</span>:</strong> توضع القطرة في <em>الكيس الملتحمي <span class="eng-term">Conjunctival sac</span></em> وليس على القرنية.</li>
+                    <li><strong>سحب الدواء <span class="eng-term">Drawing up medication</span>:</strong> الأمبولة الزجاجية <span class="eng-term">Ampule</span> تكسر وتحتاج لإبرة بفلتر <span class="eng-term">Filter needle</span> لمنع سحب شظايا الزجاج للحقنة. أما الـ <span class="eng-term">Vial</span> فيمكن استخدامه أكثر من مرة.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>6. أنواع الحقن <span class="eng-term">Parenteral Injections</span></h2>
+                <ul>
+                    <li><strong>الأدمة <span class="eng-term">Intradermal - ID</span>:</strong> لحساسية الجلد <span class="eng-term">Allergy testing</span>. زاوية (10-15 درجة). يُمنع التدليك <span class="eng-term">Don't rub</span>.</li>
+                    <li><strong>تحت الجلد <span class="eng-term">Subcutaneous - SQ</span>:</strong> مثل الإنسولين والهيبارين. زاوية (45-90 درجة). نقوم بعمل طية دهنية بقرص الجلد <span class="eng-term">Grasp skin to form a fat fold</span>.</li>
+                    <li><strong>العضل <span class="eng-term">Intramuscular - IM</span>:</strong> زاوية (90 درجة). نستخدم تقنية <strong><span class="eng-term">Z-track method</span></strong> بسحب الجلد للجانب قبل غرز الإبرة، لغلق مسار الحقنة ومنع تسرب الدواء للأنسجة السطحية <span class="eng-term">Prevents drug leakage</span>.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>7. الأنبوب الأنفي المعدي والجروح <span class="eng-term">NG Tube & Wound Care</span></h2>
+                <div class="highlight warning">
+                    <strong>مانع قطعي لإدخال الـ NG Tube <span class="eng-term">Contraindication</span>:</strong> كسر في قاعدة الجمجمة <span class="eng-term">Basilar skull fracture</span> لمنع دخوله للدماغ.
+                </div>
+                <p>أثناء الإدخال، نطلب من المريض ثني رأسه للأمام <em>وبلع الماء <span class="eng-term">Sip water</span></em> لإغلاق القصبة الهوائية وفتح المريء <span class="eng-term">To close trachea and open esophagus</span>.</p>
+                <p><strong>غسيل الجروح <span class="eng-term">Wound Irrigation</span>:</strong> يجب أن يتدفق محلول الغسيل من <em>المنطقة النظيفة إلى المنطقة المتسخة <span class="eng-term">Clean to dirty area</span></em> لمنع نشر البكتيريا. في الغيار، التنظيف يكون بمسحة واحدة لكل قطعة شاش <span class="eng-term">One wipe per gauze</span>.</p>
+            </div>
+
+            <div class="card">
+                <h2>8. مهارات أخرى هامة <span class="eng-term">Other Important Skills</span></h2>
+                <ul>
+                    <li><strong>العينات <span class="eng-term">Specimen Collection</span>:</strong> عند أخذ عينة براز <span class="eng-term">Stool specimen</span>، يمنع تلويثها بالبول لأن البول يثبط نمو بكتيريا البراز <span class="eng-term">Urine inhibits fecal bacterial growth</span>.</li>
+                    <li><strong>ترتيب السرير <span class="eng-term">Bed Making</span>:</strong> لمنع نقل الميكروبات في الهواء، يتم لف الأغطية المتسخة <span class="eng-term">Roll soiled linens</span> نحو المريض وإزالتها دون نفضها <em><span class="eng-term">Without shaking</span></em>.</li>
+                    <li><strong>الضمادات الضاغطة <span class="eng-term">Elastic Bandages</span>:</strong> نستخدم طريقة اللف <strong><span class="eng-term">Figure eight</span></strong> (شكل رقم ثمانية) عند تثبيت الضمادة حول المفاصل <span class="eng-term">Joints</span>.</li>
+                    <li><strong>القسطرة الوريدية <span class="eng-term">IV Catheter</span>:</strong> نستخدم مقاس <span class="eng-term">20G to 24G</span> للسوائل العادية. يُمنع تركيبها في أوردة الأطراف السفلية <span class="eng-term">Lower extremity veins</span> لارتفاع خطر التجلط وتلف الأنسجة <span class="eng-term">Risk of tissue damage and thrombophlebitis</span>.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Section: Quiz -->
+        <div id="quiz" class="section">
+            
+            <div id="quizIntro" class="quiz-intro">
+                <h2>جاهز لاختبار معلوماتك؟ <span class="eng-term">Ready for the Quiz?</span></h2>
+                <p>الامتحان يتكون من 30 سؤالاً شاملاً تغطي كافة أقسام المادة.</p>
+                <p><strong>طريقة الامتحان:</strong> سيظهر لك سؤال واحد في كل مرة، وسيتم تصحيح إجابتك فوراً مع الشرح (عربي/إنجليزي)، ثم ينتقل تلقائياً للسؤال التالي.</p>
+                <button class="btn-start" onclick="startQuiz()">ابدأ الامتحان الآن 🚀</button>
+            </div>
+
+            <div id="quizArea">
+                <div class="quiz-header">
+                    <span id="qNumber">سؤال 1 من 30</span>
+                    <span id="scoreDisplay">النتيجة: 0</span>
+                </div>
+                <div class="progress-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+
+                <div id="questionText" class="question-text"></div>
+                
+                <div id="optionsArea" class="options">
+                    <!-- Options will be generated here -->
+                </div>
+
+                <div id="feedbackArea" class="feedback">
+                    <h3 id="feedbackTitle"></h3>
+                    <p id="feedbackText"></p>
+                    <div class="auto-next-loader">
+                        <div id="autoNextBar" class="auto-next-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultArea">
+                <h2>انتهى الامتحان! 🎉</h2>
+                <div id="finalScoreCircle" class="score-circle">0/30</div>
+                <h3 id="resultMessage"></h3>
+                
+                <div id="mistakesContainer" class="mistakes-list" style="display:none;">
+                    <h3 style="color:var(--incorrect); border-bottom: 2px solid #ddd; padding-bottom:0.5rem;">نقاط تحتاج للمراجعة (أخطائك):</h3>
+                    <div id="mistakesList"></div>
+                </div>
+
+                <button class="btn-start" style="margin-top: 2rem;" onclick="location.reload()">إعادة الامتحان 🔄</button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>تم إعداد هذا المحتوى وتصميمه بواسطة <strong>قيس الجازي</strong> &copy; 2026</p>
+        <p>مع تمنياتي لكم بالتوفيق والتفوق في الامتحانات والمسيرة المهنية.</p>
+    </footer>
+
+    <script>
+        // Quiz Data generated from the source material
+        const quizData = [
+            {
+                q: "بناءً على توصيات منظمة الصحة العالمية، ما هو الوقت المستغرق لتعقيم اليدين باستخدام المعقمات الكحولية (Alcohol-based hand rub)؟",
+                o: ["من 40 إلى 60 ثانية", "من 20 إلى 30 ثانية", "دقيقة كاملة", "من 10 إلى 15 ثانية"],
+                c: 1,
+                r: "التعقيم الكحولي أسرع وفعال، ويستغرق 20-30 ثانية. بينما غسل اليدين بالماء والصابون (Soap and water) يستغرق 40-60 ثانية."
+            },
+            {
+                q: "أثناء القيام بالتعقيم الجراحي لليدين (Surgical hand scrub)، لماذا يجب إبقاء اليدين أعلى من مستوى المرفقين (Above elbows)؟",
+                o: ["للسماح للماء بالنزول للمناطق الأقل نظافة (الساعدين).", "لمنع تناثر الماء على الملابس المعقمة.", "لأنها الوضعية الأكثر راحة للممرض.", "لتسريع جفاف اليدين في الهواء."],
+                c: 0,
+                r: "الهدف هو تدفق الماء والشوائب من المنطقة الأنظف (اليدين/Clean area) إلى المنطقة الأقل نظافة (الساعدين/المرفقين)."
+            },
+            {
+                q: "ما هو الترتيب الصحيح لنزع معدات الحماية الشخصية (Doffing PPE)؟",
+                o: ["الكمامة، النظارات، المريول، القفازات.", "النظارات، المريول والقفازات، الكمامة.", "المريول والقفازات معاً، النظارات، الكمامة.", "القفازات، الكمامة، المريول، النظارات."],
+                c: 2,
+                r: "نبدأ بنزع المريول والقفازات معاً (Gown and Gloves) لأنهما الأكثر تلوثاً، ثم النظارات، وأخيراً الكمامة من الأربطة الخلفية."
+            },
+            {
+                q: "متى يُمنع (Contraindicated) قياس درجة حرارة المريض عن طريق الفم (Oral route)؟",
+                o: ["إذا كان يعاني من ارتفاع طفيف بالحرارة.", "إذا كان يتنفس ببطء شديد.", "بعد تناوله وجبة طعام بساعة.", "إذا كان هناك خطر أن يعض المريض الميزان."],
+                c: 3,
+                r: "يمنع قياس الحرارة فموياً لفاقدي الوعي والأطفال الصغار لخطر عض الميزان الزجاجي أو البلاستيكي (Risk of biting thermometer)."
+            },
+            {
+                q: "لإعطاء قطرة الأذن (Otic drop) لطفل يبلغ من العمر سنتين، كيف يجب سحب صيوان الأذن (Pinna)؟",
+                o: ["للأعلى وللخلف (Up and back).", "بشكل مستقيم للخلف.", "للأسفل وللخلف (Down and back).", "للأسفل وللأمام (Down and forward)."],
+                c: 2,
+                r: "للأطفال تحت 3 سنوات تسحب الأذن للأسفل والخلف (Down and back)، أما للبالغين وللأطفال فوق 3 سنوات تسحب للأعلى والخلف."
+            },
+            {
+                q: "ما هو المعدل الطبيعي لنبض القلب (Normal Pulse Rate) لدى الشخص البالغ في وقت الراحة؟",
+                o: ["40 - 60 نبضة", "60 - 100 نبضة", "80 - 120 نبضة", "100 - 140 نبضة"],
+                c: 1,
+                r: "المعدل الطبيعي للبالغين هو 60 إلى 100 نبضة في الدقيقة."
+            },
+            {
+                q: "أي من القراءات التالية يُعتبر تسارعاً في التنفس (Tachypnea) لدى البالغين؟",
+                o: ["12 نفساً/دقيقة", "16 نفساً/دقيقة", "20 نفساً/دقيقة", "24 نفساً/دقيقة"],
+                c: 3,
+                r: "التنفس الطبيعي (Normal Respiration) هو 12-20، وما يزيد عن 20 يعتبر تسارعاً في التنفس (Tachypnea)."
+            },
+            {
+                q: "قبل أخذ قراءة ضغط الدم للمريض، أي مما يلي يؤدي إلى رفع ضغط الدم بشكل مؤقت ويجب الحذر منه؟",
+                o: ["استراحة المريض لمدة 5 دقائق.", "امتلاء المثانة بالبول (Full bladder).", "عدم التحدث أثناء القياس.", "وضع الذراع بمستوى القلب."],
+                c: 1,
+                r: "امتلاء المثانة بالبول (Full bladder)، وكذلك شرب الكافيين أو التدخين قبل القياس بفترة قصيرة، ترفع الضغط مؤقتاً."
+            },
+            {
+                q: "إذا كان جهاز قياس التأكسج النبضي (Pulse Oximeter) يعطي قراءة غير دقيقة، فأي مما يلي قد يكون السبب؟",
+                o: ["دفء أطراف المريض.", "التنفس العميق.", "وجود طلاء الأظافر (Nail polish).", "ارتفاع ضغط الدم."],
+                c: 2,
+                r: "طلاء الأظافر (Nail polish) والأظافر الصناعية وبرودة الأطراف (التي تسبب تضيق الأوعية Vasoconstriction) كلها تعيق عمل مستشعر الجهاز."
+            },
+            {
+                q: "متى يُعتبر مريض السكري في المستشفى يعاني من ارتفاع سكر الدم (Hyperglycemia) المستمر الذي يحتاج لعلاج؟",
+                o: ["أكثر من 100 mg/dL.", "أكثر من 120 mg/dL.", "أكثر من 140 mg/dL.", "أكثر من 80 mg/dL."],
+                c: 2,
+                r: "حسب التوصيات الطبية في الملف، نسبة السكر التي تتجاوز 140 mg/dL للمرضى المنومين تعتبر Hyperglycemia تتطلب التدخل."
+            },
+            {
+                q: "أي مما يلي يُعد من الحقوق الخمسة الأساسية لإعطاء الأدوية (Five rights of medication administration)؟",
+                o: ["الطريق الصحيح (Right route).", "الغرفة الصحيحة (Right room).", "الطبيب الصحيح (Right doctor).", "الإبرة الصحيحة (Right syringe)."],
+                c: 0,
+                r: "الحقوق الخمسة هي: المريض الصحيح، الدواء الصحيح، الجرعة الصحيحة، الوقت الصحيح، والطريقة/المسار الصحيح (Right route)."
+            },
+            {
+                q: "عند إعطاء دواء تحت اللسان (Sublingual)، ما هي التعليمات الأهم التي يجب تقديمها للمريض؟",
+                o: ["مضغ الحبة جيداً لسرعة امتصاصها.", "شرب كأس ماء فوراً بعد ابتلاعها.", "ترك الحبة لتذوب تماماً وعدم بلعها.", "وضع الحبة بين الخد واللثة."],
+                c: 2,
+                r: "أدوية تحت اللسان يجب أن تذوب ليتم امتصاصها عبر الأوعية الدموية مباشرة. بلعها يدمر فعاليتها بسبب عصارة المعدة (Gastric juices)."
+            },
+            {
+                q: "ما هي الزاوية الصحيحة المستخدمة في الحقن داخل الأدمة (Intradermal injection)؟",
+                o: ["90 درجة.", "45 درجة.", "30 درجة.", "من 10 إلى 15 درجة."],
+                c: 3,
+                r: "الحقن داخل الأدمة (لفحوصات الحساسية Allergy testing) يتم بزاوية مسطحة جداً تتراوح بين 10 إلى 15 درجة فقط."
+            },
+            {
+                q: "لماذا تُستخدم تقنية (Z-track method) عند إعطاء الحقن العضلية (Intramuscular)؟",
+                o: ["لتسريع امتصاص الدواء في الدم.", "لمنع تسرب الدواء للأنسجة تحت الجلد (Prevents drug leakage).", "لتقليل النزيف السطحي.", "لتجنب ضرب الأعصاب الكبيرة."],
+                c: 1,
+                r: "تقنية Z-track تغلق مسار الإبرة بعد سحبها، مما يمنع الدواء من التسرب للطبقات السطحية (Subcutaneous) ويقلل تهيج الجلد."
+            },
+            {
+                q: "أين يجب أن توضع قطرة العين (Ophthalmic drops) تحديداً عند إعطائها للمريض؟",
+                o: ["على البؤبؤ مباشرة.", "في الكيس الملتحمي (Conjunctival sac).", "على القرنية (Cornea).", "في الزاوية الداخلية للعين."],
+                c: 1,
+                r: "يتم سحب الجفن السفلي ووضع القطرة في الكيس الملتحمي لتجنب وضعها مباشرة على مقلة العين مما يسبب انزعاجاً للمريض وطرد الدواء."
+            },
+            {
+                q: "أي من الأوردة التالية يُفضل تجنبها عند إدخال قسطرة وريدية محيطية (Peripheral IV Catheter)؟",
+                o: ["أوردة الأطراف السفلية (Lower extremity veins).", "الوريد الكعبري (Cephalic vein).", "أوردة ظهر اليد.", "أوردة الذراع غير المهيمن (Nondominant)."],
+                c: 0,
+                r: "يمنع أو يتجنب استخدام أوردة الساقين (الأطراف السفلية) لزيادة خطر تلف الأنسجة والتهاب الأوردة التجلطي (Thrombophlebitis)."
+            },
+            {
+                q: "أثناء غسيل الجرح (Wound irrigation)، كيف يجب أن يكون اتجاه تدفق المحلول؟",
+                o: ["من المنطقة المتسخة إلى المنطقة النظيفة.", "من الأسفل إلى الأعلى.", "من المنطقة النظيفة إلى المنطقة المتسخة (Clean to dirty area).", "بشكل دائري عشوائي."],
+                c: 2,
+                r: "يجب أن يتدفق السائل دائماً من المنطقة النظيفة إلى المتسخة لمنع نقل البكتيريا والإفرازات إلى الأنسجة النظيفة."
+            },
+            {
+                q: "ما هو المانع القطعي (Contraindication) لإدخال الأنبوب الأنفي المعدي (NG Tube) للمريض؟",
+                o: ["غثيان وقيء مستمر.", "كسر قاعدي في الجمجمة (Basilar skull fracture).", "إجراء عملية جراحية سابقة في الركبة.", "الإسهال الشديد."],
+                c: 1,
+                r: "في حال وجود كسر في قاعدة الجمجمة، هناك خطر كبير جداً أن يدخل الأنبوب بالخطأ إلى تجويف الدماغ بدلاً من المريء."
+            },
+            {
+                q: "لماذا يُطلب من المريض الامتناع عن تلويث عينة البراز بالبول عند جمعها (Stool specimen)؟",
+                o: ["لأن البول يغير لون البراز.", "لأن البول يثبط نمو البكتيريا البرازية (Inhibits fecal bacterial growth).", "لأن البول يذيب الدهون في العينة.", "لأن البول يجعل العينة سائلة جداً للتحليل."],
+                c: 1,
+                r: "البول يمنع/يثبط نمو البكتيريا البرازية مما يفسد نتائج الزراعة المخبرية."
+            },
+            {
+                q: "متى يتم استخدام تقنية اللف (Figure eight) في تطبيق الضمادات الضاغطة (Elastic bandages)؟",
+                o: ["عند اللف حول المفاصل كالكاحل (Around a joint).", "عند اللف على الأجزاء المستقيمة الطويلة.", "عند تثبيت ضمادة على الرأس.", "في حالات البتر فقط."],
+                c: 0,
+                r: "تقنية Figure eight (الرقم ثمانية) توفر المرونة والدعم وتُستخدم للالتفاف حول المفاصل مثل الكوع أو الكاحل."
+            },
+            {
+                q: "إذا كان مستوى سكر الدم لمريض في المستشفى هو 50 mg/dL، فكيف يُصنف هذا المستوى؟",
+                o: ["طبيعي.", "انخفاض سكر الدم من المستوى 1.", "انخفاض سكر الدم من المستوى 2 (Hypoglycemia Level 2).", "ارتفاع سكر الدم."],
+                c: 2,
+                r: "أقل من 54 mg/dL يعتبر انخفاض سكر مستوى 2 (Level 2) ويحتاج لتدخل فوري لعلاج الأعراض العصبية."
+            },
+            {
+                q: "عند ترتيب سرير المريض وهو غير موجود فيه (Unoccupied Bed)، لماذا يجب إزالة الأغطية المتسخة دون نفضها (Without shaking)؟",
+                o: ["لتوفير الوقت والجهد.", "للحفاظ على نظافة ملابس الممرض.", "لمنع التجاعيد في الشراشف.", "لمنع انتشار الميكروبات في الهواء (Microorganisms dispersing)."],
+                c: 3,
+                r: "نفض الأغطية ينشر الميكروبات العالقة بها في الهواء مما يزيد من خطر العدوى (Health care-associated infection)."
+            },
+            {
+                q: "أي من الأدوية التالية يجب استخدام إبرة بفلتر (Filter needle) عند سحبها بالحقنة؟",
+                o: ["الأدوية الموجودة في فيال مطاطي (Vial).", "الأدوية الموجودة في أمبولة زجاجية (Ampule).", "السوائل الوريدية (IV fluids).", "حقن الإنسولين الجاهزة."],
+                c: 1,
+                r: "الأمبولة الزجاجية (Ampule) يتم كسرها، وقد تسقط شظايا زجاجية دقيقة جداً داخل السائل، لذا يجب استخدام إبرة بفلتر لسحب الدواء."
+            },
+            {
+                q: "أثناء قياس النبض الكعبري (Radial Pulse)، لماذا يُمنع استخدام الإبهام (Thumb) للقياس؟",
+                o: ["لأن الإبهام يضغط بقوة فيوقف تدفق الدم.", "لأنه قصير ولا يغطي منطقة الشريان.", "لأن الإبهام له نبض قوي خاص به قد يربكك.", "لأنه غير مريح للمريض."],
+                c: 2,
+                r: "الإبهام (Thumb) يحتوي على شريان بنبض قوي نسبياً، فإذا استخدمته قد تشعر بنبضك أنت بدلاً من نبض المريض."
+            },
+            {
+                q: "في الحقن تحت الجلد (Subcutaneous injection)، ما هو الإجراء الصحيح الذي يتم لتسهيل دخول الإبرة وتجنب العضلات؟",
+                o: ["قرص الجلد لتكوين طية دهنية (Form a fat fold).", "شد الجلد بقوة للأسفل.", "تدليك المنطقة قبل الحقن.", "النقر على الجلد بأصبعين."],
+                c: 0,
+                r: "يتم قرص الجلد لرفع النسيج الدهني (Subcutaneous tissue) وتجنب الحقن العميق في العضلات التي تحته."
+            },
+            {
+                q: "عند استخدام مقياس التأكسج النبضي (Pulse Oximeter)، إذا رن الإنذار (Alarm) ماذا يجب أن يفعل الممرض أولاً؟",
+                o: ["إعطاء المريض أكسجين فورا.", "تقييم المريض والتأكد من تثبيت المستشعر بشكل صحيح.", "إطفاء الإنذار وتجاهله.", "سحب دم فوري لتحليل الغازات."],
+                c: 1,
+                r: "الخطوة الأولى دائماً هي تقييم المريض السريري والتأكد من أن الجهاز (المستشعر Sensor) لم يتحرك من مكانه وأنه مركب بشكل صحيح."
+            },
+            {
+                q: "ما هي أفضل وضعية ليد المريض عند قياس الأكسجين (Pulse Oximetry) لضمان دقة القراءة؟",
+                o: ["مرفوعة فوق الرأس.", "موضوعة بمستوى القلب (Heart level).", "متدلية للأسفل.", "لا يهم وضع اليد."],
+                c: 1,
+                r: "يتم وضع اليد بمستوى القلب للتخلص من النبضات الوريدية (Venous pulsations) وتعزيز القراءة الدقيقة للأكسجين الشرياني."
+            },
+            {
+                q: "أي من الأدوية التالية يمنع إعطاؤها عبر الأنبوب الأنفي المعدي (NG Tube)؟",
+                o: ["الأشربة السائلة.", "الأدوية التي تؤخذ تحت اللسان (Sublingual).", "الحبوب القابلة للسحق.", "الماء المعقم."],
+                c: 1,
+                r: "الأدوية تحت اللسان يجب أن تمتص مباشرة في الدم عبر الفم، إذا أُعطيت في المعدة سيتم تدميرها بواسطة العصارة الهضمية (Gastric juices) وتفقد مفعولها."
+            },
+            {
+                q: "أثناء إدخال الأنبوب الأنفي المعدي (NG Tube)، يُطلب من المريض ثني رأسه للأمام وبلع رشفات من الماء (Sip water). ما الهدف؟",
+                o: ["لتنظيف الحنجرة.", "لمنع القيء.", "لإغلاق القصبة الهوائية وفتح المريء.", "لتسهيل انزلاق الأنبوب بفضل الماء."],
+                c: 2,
+                r: "البلع وثني الرأس للأمام يغلق لسان المزمار (Epiglottis) على القصبة الهوائية (Trachea)، ويفتح المريء (Esophagus) مما يضمن نزول الأنبوب للمعدة وليس للرئتين."
+            },
+            {
+                q: "عند ترتيب سرير المريض وهو راقد عليه (Occupied Bed Making)، ما هي الخطوة الصحيحة للتعامل مع الأغطية السفلية المتسخة (Soiled bottom linens)؟",
+                o: ["سحبها بقوة من تحت المريض.", "لفها نحو المريض وإبقاؤها تحت ظهره (Roll toward patient).", "رميها على الأرض مؤقتاً.", "قصها بالمقص لسهولة الإزالة."],
+                c: 1,
+                r: "يتم لف الأغطية المتسخة (Roll soiled bottom linens) باتجاه المريض لإبقاء الأوساخ محصورة وتقليل التلوث، ثم وضع الأغطية النظيفة بجانبها، ليتقلب المريض عليها."
+            }
+        ];
+
+        // Quiz State
+        let currentQuestion = 0;
+        let score = 0;
+        let mistakes = [];
+        let autoNextTimeout;
+
+        // UI Elements
+        const elStudy = document.getElementById('study');
+        const elQuiz = document.getElementById('quiz');
+        const elQuizIntro = document.getElementById('quizIntro');
+        const elQuizArea = document.getElementById('quizArea');
+        const elResultArea = document.getElementById('resultArea');
+        const elQuestionText = document.getElementById('questionText');
+        const elOptionsArea = document.getElementById('optionsArea');
+        const elFeedbackArea = document.getElementById('feedbackArea');
+        const elFeedbackTitle = document.getElementById('feedbackTitle');
+        const elFeedbackText = document.getElementById('feedbackText');
+        const elProgressBar = document.getElementById('progressBar');
+        const elQNumber = document.getElementById('qNumber');
+        const elScoreDisplay = document.getElementById('scoreDisplay');
+        const elAutoNextBar = document.getElementById('autoNextBar');
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (tabId === 'study') {
+                elStudy.classList.add('active');
+                elQuiz.classList.remove('active');
+            } else {
+                elStudy.classList.remove('active');
+                elQuiz.classList.add('active');
+            }
+        }
+
+        function startQuiz() {
+            elQuizIntro.style.display = 'none';
+            elQuizArea.style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            mistakes = [];
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            // Reset UI
+            elFeedbackArea.style.display = 'none';
+            elOptionsArea.innerHTML = '';
+            clearTimeout(autoNextTimeout);
+            
+            const currentData = quizData[currentQuestion];
+            elQNumber.innerText = `سؤال ${currentQuestion + 1} من ${quizData.length}`;
+            elScoreDisplay.innerText = `النتيجة: ${score}`;
+            elProgressBar.style.width = `${((currentQuestion) / quizData.length) * 100}%`;
+            
+            elQuestionText.innerText = currentData.q;
+
+            currentData.o.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = opt; // Using innerHTML to support span tags if needed later
+                btn.onclick = () => checkAnswer(index, btn);
+                elOptionsArea.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            // Disable all buttons
+            const buttons = elOptionsArea.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            const currentData = quizData[currentQuestion];
+            const isCorrect = selectedIndex === currentData.c;
+
+            if (isCorrect) {
+                btnElement.classList.add('correct');
+                score++;
+                showFeedback(true, currentData.r);
+            } else {
+                btnElement.classList.add('wrong');
+                buttons[currentData.c].classList.add('correct');
+                mistakes.push({ q: currentData.q, correctAns: currentData.o[currentData.c], rationale: currentData.r });
+                showFeedback(false, currentData.r);
+            }
+
+            elScoreDisplay.innerText = `النتيجة: ${score}`;
+            elProgressBar.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+
+            // Auto advance animation & logic
+            elAutoNextBar.style.transition = 'none';
+            elAutoNextBar.style.width = '100%';
+            
+            setTimeout(() => {
+                elAutoNextBar.style.transition = 'width 4s linear';
+                elAutoNextBar.style.width = '0%';
+            }, 50);
+
+            autoNextTimeout = setTimeout(() => {
+                nextQuestion();
+            }, 4000);
+        }
+
+        function showFeedback(isCorrect, rationale) {
+            elFeedbackArea.style.display = 'block';
+            elFeedbackArea.className = `feedback ${isCorrect ? 'success' : 'error'}`;
+            elFeedbackTitle.innerText = isCorrect ? '✅ إجابة صحيحة! (Correct!)' : '❌ إجابة خاطئة! (Incorrect!)';
+            elFeedbackText.innerHTML = rationale;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            elQuizArea.style.display = 'none';
+            elResultArea.style.display = 'block';
+            
+            const circle = document.getElementById('finalScoreCircle');
+            circle.innerText = `${score}/${quizData.length}`;
+            
+            const percentage = (score / quizData.length) * 100;
+            let msg = '';
+            if (percentage >= 90) { msg = "ممتاز جداً! أنت مستعد تماماً للامتحان 🌟"; circle.style.borderColor = "#2a9d8f"; circle.style.color = "#2a9d8f";}
+            else if (percentage >= 75) { msg = "جيد جداً! لديك أساس قوي مع بعض الملاحظات البسيطة 👍"; }
+            else if (percentage >= 50) { msg = "جيد، لكنك تحتاج لمراجعة قسم الشرح مرة أخرى لضمان التفوق 📚"; circle.style.borderColor = "#ff9f1c"; circle.style.color = "#ff9f1c";}
+            else { msg = "تحتاج إلى دراسة المادة بتركيز أكبر، لا تقلق، قسم الشرح موجود لمساعدتك 💪"; circle.style.borderColor = "#e76f51"; circle.style.color = "#e76f51";}
+            
+            document.getElementById('resultMessage').innerText = msg;
+
+            if (mistakes.length > 0) {
+                document.getElementById('mistakesContainer').style.display = 'block';
+                const list = document.getElementById('mistakesList');
+                list.innerHTML = '';
+                mistakes.forEach(m => {
+                    list.innerHTML += `
+                        <div class="mistake-item">
+                            <strong>السؤال:</strong> ${m.q}<br>
+                            <span style="color:var(--correct);"><strong>الصواب:</strong> ${m.correctAns}</span><br>
+                            <span style="color:var(--text-muted); font-size:0.9rem;"><strong>السبب:</strong> ${m.rationale}</span>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+    </script>
+</body>
+</html>
